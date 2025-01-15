@@ -323,45 +323,48 @@ public class DualParticleWaveUI : MonoBehaviour
             waveDisplayUI.FlowColour = displayColour;
     }
 
-    void Start()
+    private void Awake()
     {
         if (waveCRT != null)
         {
             matWaveCRT = waveCRT.material;
             waveCrtSizePx = new Vector2Int(waveCRT.width, waveCRT.height);
         }
-        waveMeshScale = controlScale * waveCrtSizePx.y /(waveCrtDims.y > 0 ? waveCrtDims.y : 1);
-    
-        MinLambda = lambdaSlider != null ? lambdaSlider.minValue : minLambda;
-        initSimulations();
-        SlitCount = slitCount;
         if (widthSlider != null)
         {
             widthSlider.maxValue = 5;
             widthSlider.maxValue = 75;
             widthSlider.SetValueWithoutNotify(slitWidth);
         }
-        SlitWidth = slitWidth;
         if (pitchSlider != null)
         {
             pitchSlider.minValue = 40;
             pitchSlider.maxValue = 200;
             pitchSlider.SetValueWithoutNotify(slitPitch);
         }
-        SlitPitch = slitPitch;
         if (lambdaSlider != null)
         {
             lambdaSlider.minValue = minLambda;
             lambdaSlider.maxValue = maxLambda;
             lambdaSlider.SetValueWithoutNotify(lambda);
         }
-        Lambda = lambda;
         if (scaleSlider != null)
         {
             scaleSlider.minValue = 1;
             scaleSlider.maxValue = 5;
             scaleSlider.SetValueWithoutNotify(simScale);
         }
+    }
+    void Start()
+    {
+        waveMeshScale = controlScale * waveCrtSizePx.y /(waveCrtDims.y > 0 ? waveCrtDims.y : 1);
+    
+        MinLambda = lambdaSlider != null ? lambdaSlider.minValue : minLambda;
+        initSimulations();
+        SlitCount = slitCount;
+        SlitWidth = slitWidth;
+        SlitPitch = slitPitch;
+        Lambda = lambda;
         SimScale = simScale;
         SetColour();
     }
