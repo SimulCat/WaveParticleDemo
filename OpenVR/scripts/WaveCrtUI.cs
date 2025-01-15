@@ -81,8 +81,6 @@ public class WaveCrtUI : MonoBehaviour
         NumSources = numSources - 1;
     }
 
-
-
     public float Lambda
     {
         get => lambda;
@@ -99,12 +97,6 @@ public class WaveCrtUI : MonoBehaviour
         }
     }
 
-    public void onLambda()
-    {
-        if (lambdaSlider != null)
-            Lambda = lambdaSlider.value;
-    }
-
     public float SlitPitch
     {
         get => slitPitch;
@@ -119,11 +111,6 @@ public class WaveCrtUI : MonoBehaviour
         }
     }
 
-    public void onSlitPitch()
-    {
-        if (pitchSlider != null)
-            SlitPitch = pitchSlider.value;
-    }
     public float SlitWidth
     {
         get => slitWidth;
@@ -138,14 +125,6 @@ public class WaveCrtUI : MonoBehaviour
         }
     }
 
-    public void onSlitWidth()
-    {
-        if (widthSlider != null)
-        {
-            SlitWidth = widthSlider.value;
-            Debug.Log(gameObject.name + "onSlitWidth=" + SlitWidth);
-        }
-    }
     public float SimScale
     {
         get => simScale;
@@ -162,11 +141,6 @@ public class WaveCrtUI : MonoBehaviour
         }
     }
 
-    public void onSimScale()
-    {
-        if (scaleSlider != null)
-            SimScale = scaleSlider.value;
-    }
 
     void UpdateSimulation()
     {

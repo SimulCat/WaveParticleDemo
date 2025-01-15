@@ -37,6 +37,10 @@ public class WaveDisplayUI : MonoBehaviour
     [SerializeField] Slider contrastSlider;
     [SerializeField] TextMeshProUGUI contrastValue;
 
+    [Header("Mode Colours")]
+    [SerializeField]
+    private Color flowColour = Color.magenta;
+
     [Header("Serialized for monitoring in Editor")]
     [SerializeField]
     private Material matSimDisplay = null;
@@ -45,6 +49,18 @@ public class WaveDisplayUI : MonoBehaviour
     //[SerializeField]
 
     private float prevVisibility = -1;
+
+    public Color FlowColour
+    {
+        get => flowColour;
+        set
+        {
+            flowColour = value;
+            if (iHaveDisplayMaterial)
+                matSimDisplay.SetColor("_ColorFlow", flowColour);
+        }
+    }
+
     private void reviewContrast()
     {
         if (!iHaveDisplayMaterial)
@@ -76,7 +92,7 @@ public class WaveDisplayUI : MonoBehaviour
             matSimDisplay.SetFloat("_Frequency", playSim ? frequency : 0f);
     }
 
-    float Frequency
+    public float Frequency
     {
         get => frequency;
         set
@@ -90,7 +106,7 @@ public class WaveDisplayUI : MonoBehaviour
         }
     }
 
-    private bool PlaySim
+    public bool PlaySim
     {
         get => playSim;
         set
@@ -154,39 +170,6 @@ public class WaveDisplayUI : MonoBehaviour
         }
     }
 
-    public void onPlaySim()
-    {
-        if (togPlay == null) 
-            return;
-        if (togPlay.isOn && !playSim)
-        {
-            PlaySim = true;
-        }
-    }
-
-    public void onPauseSim()
-    {
-        if (togPause == null)
-            return;
-        if (togPause.isOn && playSim)
-        {
-            PlaySim = false;
-        }
-    }
-
-    public void onFrequency()
-    {
-        if (frequencySlider == null)
-            return;
-        Frequency = frequencySlider.value;
-    }
-
-    public void onContrast()
-    {
-        if (contrastSlider == null)
-            return;
-        Contrast = contrastSlider.value;
-    }
 
     public void onMode()
     {
