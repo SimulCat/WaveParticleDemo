@@ -69,7 +69,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BeamWidth: 316.30548
+    - _BeamWidth: 245.20001
     - _Brightness: 3
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -83,7 +83,7 @@ Material:
     - _GratingOffset: 0
     - _Lambda: 0
     - _LambdaPx: 30
-    - _MapMaxI: 255
+    - _MapMaxI: 511
     - _MapMaxP: 99.99999
     - _Metallic: 0
     - _Mode: 0
@@ -94,13 +94,13 @@ Material:
     - _ParticleP: 13.888888
     - _Phase: 0
     - _SamplesPerSlit: 7.2
-    - _Scale: 4.8456306
+    - _Scale: 2
     - _ShowBeam: 0.2
-    - _SlitCount: 8
-    - _SlitPitch: 42.936943
+    - _SlitCount: 7
+    - _SlitPitch: 40
     - _SlitPitchPx: 364.22433
     - _SlitWidePx: 5
-    - _SlitWidth: 12.112984
+    - _SlitWidth: 4.0000005
     - _SmoothnessTextureChannel: 0
     - _SourceResolution: 0.5
     - _SpecularHighlights: 1

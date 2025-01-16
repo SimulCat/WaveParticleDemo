@@ -336,10 +336,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VRC.Udon.UdonBehaviour, VRC.Udon
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
+        m_MethodName: set_SpeedRange
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -508,10 +508,10 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuantumScatter, Assembly-CSharp
-        m_MethodName: showProb
-        m_Mode: 1
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
+        m_MethodName: set_ShowProbability
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -568,6 +568,7 @@ GameObject:
   - component: {fileID: 8994045491496415027}
   - component: {fileID: 1583292508731009675}
   - component: {fileID: 8056909591837572804}
+  - component: {fileID: 2866378037085544444}
   m_Layer: 0
   m_Name: PanelParticles
   m_TagString: Untagged
@@ -639,6 +640,52 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 3
+--- !u!114 &2866378037085544444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045787596986658585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3e09ed15289ce419c2d93772c6e96e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  probabilityCRT: {fileID: 8600000, guid: e8e7dd6a3b595d746b22a8beea84d7d4, type: 2}
+  simSize: {x: 3.2, y: 1.6}
+  showProbability: 1
+  probVisPercent: 30
+  simPixels: {x: 1280, y: 640}
+  texName: _MomentumMap
+  particleMeshRend: {fileID: 0}
+  visibility: 1
+  pointsWide: 256
+  gratingOffset: 0
+  slitCount: 2
+  slitPitch: 45
+  slitWidth: 12
+  pulseParticles: 0
+  pulseWidth: 1
+  speedRange: 10
+  simScale: 0
+  displayColor: {r: 0, g: 1, b: 1, a: 1}
+  maxParticleK: 10
+  minParticleK: 1
+  particleK: 1
+  togPlay: {fileID: 8182612476150702932}
+  togPause: {fileID: 2356592552682004396}
+  togShowHide: {fileID: 726658391574720427}
+  togProbability: {fileID: 3613261803343731208}
+  togPulseParticles: {fileID: 130493847367154598}
+  probVizSlider: {fileID: 5689758164391678758}
+  probVizValue: {fileID: 4097623269363300680}
+  pulseWidthSlider: {fileID: 1527534123357490697}
+  pulseWidthValue: {fileID: 5487569693917260382}
+  speedRangeSlider: {fileID: 9105133220097008968}
+  SpeedRangeValue: {fileID: 3727133303533346900}
+  shaderPlaying: 0
+  particlePlayState: 1
 --- !u!1 &2248439818740707843
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +698,7 @@ GameObject:
   - component: {fileID: 6186367376604985127}
   - component: {fileID: 3727133303533346900}
   m_Layer: 17
-  m_Name: ValueLabel
+  m_Name: lblSpeedl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -897,7 +944,7 @@ GameObject:
   - component: {fileID: 7521496229279292164}
   - component: {fileID: 4097623269363300680}
   m_Layer: 17
-  m_Name: ValueLabel
+  m_Name: lblProbViz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1290,8 +1337,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuantumScatter, Assembly-CSharp
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
         m_MethodName: simHide
         m_Mode: 1
         m_Arguments:
@@ -2747,7 +2794,7 @@ GameObject:
   - component: {fileID: 856162612720804403}
   - component: {fileID: 5487569693917260382}
   m_Layer: 17
-  m_Name: ValueLabel
+  m_Name: lblPulseWidth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2953,8 +3000,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuantumScatter, Assembly-CSharp
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
         m_MethodName: simPause
         m_Mode: 1
         m_Arguments:
@@ -3051,10 +3098,10 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuantumScatter, Assembly-CSharp
-        m_MethodName: togPulse
-        m_Mode: 1
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
+        m_MethodName: set_PulseParticles
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3165,7 +3212,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8312858436534203355}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3231,10 +3278,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VRC.Udon.UdonBehaviour, VRC.Udon
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
+        m_MethodName: set_ProbVisPercent
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3327,8 +3374,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: QuantumScatter, Assembly-CSharp
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
         m_MethodName: simPlay
         m_Mode: 1
         m_Arguments:
@@ -3430,10 +3477,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VRC.Udon.UdonBehaviour, VRC.Udon
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 2866378037085544444}
+        m_TargetAssemblyTypeName: CRTQuantumUI, Assembly-CSharp
+        m_MethodName: set_PulseWidth
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
