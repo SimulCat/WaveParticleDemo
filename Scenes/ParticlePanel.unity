@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 515617624}
-  - component: {fileID: 515617625}
   m_Layer: 0
   m_Name: ParticleSimulation
   m_TagString: Untagged
@@ -157,29 +156,6 @@ Transform:
   - {fileID: 1241323586}
   m_Father: {fileID: 1011476677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &515617625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 515617623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8766340d618d7294485af5dd91999841, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slitCount: 2
-  slitPitch: 100
-  slitWidth: 10
-  simScale: 1
-  gratingOffset: 0
-  simPixelScale: 1
-  momentum: 1
-  maxMomentum: 10
-  matProbabilitySim: {fileID: 0}
-  matParticleFlow: {fileID: 0}
-  gratingUpdateRequired: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +377,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 31.97544
+  field of view: 34.30025
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -428,7 +404,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -2.8}
+  m_LocalPosition: {x: 0, y: 1, z: -2.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

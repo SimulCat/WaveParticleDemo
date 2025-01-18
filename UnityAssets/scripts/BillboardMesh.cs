@@ -1,6 +1,42 @@
 ﻿using UnityEngine;
+/*
+ * This script generates a mesh of billboards (quads or triangles) in an array with a 
+ * rectangular (box) or circular/spherical (ball) layout.
+ * 
+ * It is used to create a mesh of quads or triangles that can be used to procedurally 
+ * render a large number of billboards in a single draw call.
+ * 
+ * Each billboard is a quad or triangle that can be used to render a particle texture or 
+ * sprite.
+ * 
+ * In the fragment shader, each vertex is linked to a particular particle in the 
+ * simulation by dividing the vertex index by 4 (for quads) or 3 (for Triangles). 
+ * 
+ * The vertex position is then updated to reflect it's position and orientation relative 
+ * to the centre postion of the particular particle in object space.
+ * 
+ * The concept and shader code was derived from examples provided by VRChat world creator 
+ * SBoys3 who developed the technique to render flocks of particles representng flying 
+ * debris in Tornado simulations that run on the mobile platforms.
+ * 
+ * The advantage of this method is that a flock of particles can be procedurally rendered 
+ * and animated in a single draw call, allowng 20,000 particles to be simulated in a mobile 
+ * VR device such as the quest.
+ * 
+ * This script (originally calle QuadMesh) is currently used in the WaveParticleDemo project 
+ * to generate a rectangular mesh in the quantum particles simulation.
+ * 
+ * It is also used in a separate Crystal scattering project to generate a ball of particle 
+ * billboards used to procedurally render a crystal and reciprocal structures in space. 
+ * 
+ * Note: The ball option was added to minimise the total number of redundant particles and 
+ * simplify the math in the shader code when developing crystal lattice applications that 
+ * operate within a spherical volume.
+ * 
+ */
 
-public class QuadMesh : MonoBehaviour
+[RequireComponent(typeof(MeshFilter))]
+public class BillboardMesh : MonoBehaviour
 {
     [Tooltip("Width/Height/Depth in model space")] public Vector3 meshDimensions = Vector3.one;
     [SerializeField, Tooltip("Uncheck for circular/sphere point distribution")] public bool isRectangular = false;
@@ -14,8 +50,6 @@ public class QuadMesh : MonoBehaviour
     Mesh mesh;
     MeshFilter mf;
 
-    // Serialize for debug
- //   [SerializeField]
     float radiusSq;
     [SerializeField]
     Vector3 arraySpacing;
@@ -25,18 +59,19 @@ public class QuadMesh : MonoBehaviour
     Vector3 arrayOrigin;
     [SerializeField]
     bool useTriangles = false;
-    // Only Uncomment for verification in editor 
+
+    // Only Uncomment serialization for verification in editor 
     //[SerializeField]
     private Vector3[] vertices;
     //[SerializeField]
     private Vector2[] uvs;
     //[SerializeField]
     int[] triangles;
-    [SerializeField]
+    //[SerializeField]
     int numDecals;
-    [SerializeField]
+    //[SerializeField]
     int numVertices;
-    [SerializeField]
+    //[SerializeField]
     int numTriangles;
     private bool generateMesh()
     {
@@ -182,8 +217,6 @@ public class QuadMesh : MonoBehaviour
                 Vector4 pointVec = new Vector4(numGridPoints.x, numGridPoints.y, numGridPoints.z, numGridPoints.x * numGridPoints.y * numGridPoints.z);
                 material.SetVector("_ArrayDimension", pointVec);
             }
-            //material.SetFloat("_CornerCount", useTriangles ? 3f : 4f);
-            //material.SetFloat("_MarkerScale", value: 0.3f);
         }
         return true;
     }
