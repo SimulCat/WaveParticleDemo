@@ -4,8 +4,8 @@ This repository contains a collection of Unity standalone assets and example sce
 Unlike the VRChat version of this repository the scripts employ C# and do not require the VRChat SDK or UdonSharp (U#).
 
 ## Technical notes:
-Because GPU Compute shaders are not permitted in VRChat world projects, the assets here were built using a relatively obscure component called a Custom Render Texture (CRT).
-This technique allows numerical solutions to be run on the GPU, with the output passing directly to display shaders on the GPU without requiring data to pass via the CPU.
+Because GPU compute shaders are not permitted in VRChat world projects, the assets here were built using a relatively obscure component called a Custom Render Texture (CRT).
+This technique allows numerical solutions to be run on the GPU. The output is passed directly to rendering shaders as a render texture without requiring data to pass through the CPU.
 
 Another benefit is that, like a compute shader, the CRT can be run selectively, updating only when required, not every frame. This results in a very efficient model that allows these simulations to run on mobile devices and standalone VR headsets. 
 
