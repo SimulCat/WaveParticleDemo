@@ -224,9 +224,13 @@ namespace WaveParticleSim
         {
             shaderBaseTime = 0;
             shaderPauseTime = 0;
-            matParticleFlow.SetFloat("_PauseTime", 0f);
-            matParticleFlow.SetFloat("_BaseTime", shaderBaseTime);
-            matParticleFlow.SetFloat("_Play", 1f);
+            if (matParticleFlow != null)
+            {
+                matParticleFlow.SetFloat("_PauseTime", 0f);
+                matParticleFlow.SetFloat("_BaseTime", shaderBaseTime);
+                matParticleFlow.SetFloat("_Play", 1f);
+            }
+            
             shaderPlaying = true;
             //Debug.Log("Init");
         }
