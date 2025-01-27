@@ -230,7 +230,7 @@ Shader "SimulCat/Ballistic/Particle Scattering"
                 //      3) Transform the result by the Projection matrix (UNITY_MATRIX_P) and we now have the billboarded vertex in clip space.
                 o.vertex = mul(UNITY_MATRIX_P,mul(UNITY_MATRIX_MV, camModelCentre) + camVertexOffset);
                 
-                //Standard code
+                //Non-billboard standard code
                 //o.vertex = UnityObjectToClipPos (v.vertex);
                 
                 o.color = float4(_Color.rgb,-.5 + posIsInside * 1.5);
