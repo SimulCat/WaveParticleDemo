@@ -1,4 +1,4 @@
-Shader "SimulCat/URP/Particle Scattering"
+Shader "Universal Render Pipeline/Quantum/Particle Scattering"
 {
     /* This shader is a URP version of the Particle Scattering shader. It is used to render the quantum scattering particles in the scene. 
     */
@@ -63,7 +63,7 @@ Shader "SimulCat/URP/Particle Scattering"
                 float4 positionOS   : POSITION;
                 float2 uv           : TEXCOORD0;
                 uint id             : SV_VertexID;
-                float3 normalsOS	: NORMAL;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct Varyings
@@ -72,8 +72,7 @@ Shader "SimulCat/URP/Particle Scattering"
                 float4 positionHCS  : SV_POSITION;
                 float2 uv           : TEXCOORD0;
                 float4 color : COLOR;
-                float3 norlmalsHCS : NORMAL;
-
+                UNITY_VERTEX_OUTPUT_STEREO
             };
             
             TEXTURE2D(_BaseMap);
@@ -159,6 +158,9 @@ Shader "SimulCat/URP/Particle Scattering"
             Varyings vert (Attributes IN)
             {
                 Varyings OUT;
+                UNITY_SETUP_INSTANCE_ID(IN);
+                ZERO_INITIALIZE(Varyings,OUT);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
                 // Calculate the object space offset of the triangle centre from the vertex position
                 float3 centerOffset;
                 switch(IN.id%3) // Corner is vertex ID % 3
@@ -173,8 +175,8 @@ Shader "SimulCat/URP/Particle Scattering"
                         centerOffset = float3(0.5,-0.288675135,0);
                         break;
                 }
-                float3 vertexOffset = centerOffset*_ArraySpacing;
-                float3 triCentreInMesh = IN.positionOS - vertexOffset;
+                float3 vertexOffset = centerOffset*_ArraySpacing.xyz;
+                float3 triCentreInMesh = IN.positionOS.xyz - vertexOffset;
 
                 float2 localGridCentre = ((_ArrayDimension.xy - float2(1,1)) * _ArraySpacing.xy);
                 float maxDiagonalDistance = length(localGridCentre);

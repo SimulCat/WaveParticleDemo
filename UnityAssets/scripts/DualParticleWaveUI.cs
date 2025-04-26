@@ -1,7 +1,6 @@
-﻿
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace WaveParticleSim
 {
@@ -223,7 +222,8 @@ namespace WaveParticleSim
                 if (widthSlider != null && widthSlider.value != slitWidth)
                     widthSlider.SetValueWithoutNotify(slitWidth);
                 if (widthValue != null)
-                    widthValue.text = string.Format("{0:0.0}\nmm", slitWidth);
+                    widthValue.text = slitWidth < 10 ? string.Format("{0:0.0}mm", slitWidth) : string.Format("{0}mm", Mathf.RoundToInt(slitWidth));
+                widthValue.text = string.Format("{0:0.0}mm", slitWidth);
                 if (particleSim != null)
                     particleSim.SlitWidth = slitWidth * controlScale;
                 if (matWaveCRT != null)
@@ -241,12 +241,7 @@ namespace WaveParticleSim
                 if (pitchSlider != null && pitchSlider.value != slitPitch)
                     pitchSlider.SetValueWithoutNotify(slitPitch);
                 if (pitchValue != null)
-                {
-                    if (slitPitch < 10)
-                        pitchValue.text = string.Format("{0:0.0}\nmm", slitPitch);
-                    else
-                        pitchValue.text = string.Format("{0}\nmm", Mathf.RoundToInt(slitPitch));
-                }
+                    pitchValue.text = slitPitch < 10 ? string.Format("{0:0.0}mm", slitPitch) : string.Format("{0}mm", Mathf.RoundToInt(slitPitch));
                 //if (vectorDrawing != null)
                 // vectorDrawing.SetProgramVariable<float>("slitPitch", slitPitch);
                 if (particleSim != null)
