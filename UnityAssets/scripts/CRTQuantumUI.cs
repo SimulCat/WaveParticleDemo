@@ -53,9 +53,9 @@ namespace WaveParticleSim
         [SerializeField]
         public Color displayColor = Color.cyan;
         [SerializeField]
-        public float maxMomentum = 10;
+        public float maxParticleP = 10;
         [SerializeField]
-        private float minParticleK = 1;
+        private float minParticleP = 1;
 
         private float Visibility
         {
@@ -71,17 +71,30 @@ namespace WaveParticleSim
             }
         }
 
-        public float MaxMomentum
+        public float MaxParticleP
         {
-            get => maxMomentum;
+            get => maxParticleP;
             set
             {
-                maxMomentum = value;
+                gratingUpdateRequired |= value != maxParticleP;
+                maxParticleP = value;
+                if (matParticleFlow != null)
+                    matParticleFlow.SetFloat("_MaxParticleP", maxParticleP);
             }
         }
-        public float MinParticleK { get => minParticleK; set => minParticleK = value; }
+        public float MinParticleP
+        {
+            get => minParticleP;
+            set
+            {
+                gratingUpdateRequired |= value != minParticleP;
+                minParticleP = value;
+                if (matParticleFlow != null)
+                    matParticleFlow.SetFloat("_MinParticleP", minParticleP);
+            }
+        }
         [SerializeField]
-        private float particleK = 1;
+        private float particleP = 1;
 
         [Header("UI Elements")]
         [SerializeField] Toggle togPlay;
@@ -393,18 +406,18 @@ namespace WaveParticleSim
             }
         }
 
-        public float ParticleK
+        public float ParticleP
         {
-            get => particleK;
+            get => particleP;
             set
             {
-                crtUpdateRequired |= value != particleK;
-                particleK = value;
-                //float particleP = particleK / planckSim;
+                crtUpdateRequired |= value != particleP;
+                particleP = value;
+                //float particleP = particleP / planckSim;
                 if (matProbabilitySim != null)
-                    matProbabilitySim.SetFloat("_ParticleP", particleK);
+                    matProbabilitySim.SetFloat("_ParticleP", particleP);
                 if (matParticleFlow != null)
-                    matParticleFlow.SetFloat("_ParticleP", particleK);
+                    matParticleFlow.SetFloat("_ParticleP", particleP);
             }
         }
 
@@ -468,7 +481,7 @@ namespace WaveParticleSim
             float probIntegralSum = 0;
             for (int i = 0; i < pointsWide; i++)
             {
-                impulse = (maxMomentum * i) / pointsWide;
+                impulse = (maxParticleP * i) / pointsWide;
                 prob = sampleDistribution(impulse * pi_h);
                 gratingFourierSq[i] = prob;
                 probIntegral[i] = probIntegralSum;
@@ -494,7 +507,7 @@ namespace WaveParticleSim
             float frac;
             float val;
             int lim = pointsWide - 1;
-            float norm = maxMomentum / lim;
+            float norm = maxParticleP / lim;
             for (int i = 0; i <= lim; i++)
             {
                 while ((vmax <= i) && (indexAbove <= lim))
@@ -538,14 +551,14 @@ namespace WaveParticleSim
                 float impulse;
                 for (int i = 0; i < pointsWide; i++)
                 {
-                    impulse = (maxMomentum * i) / pointsWide;
+                    impulse = (maxParticleP * i) / pointsWide;
 
                     float sample = gratingFourierSq[i];
                     float integral = probIntegral[i];
                     texData[pointsWide + i] = new Color(sample, integral, impulse, 1f);
                     texData[pointsWide - i] = new Color(sample, -integral, -impulse, 1f);
                 }
-                matProbabilitySim.SetFloat("_MapMaxP", maxMomentum); // "Map max momentum", float ) = 1
+                matProbabilitySim.SetFloat("_MapMaxP", maxParticleP); // "Map max momentum", float ) = 1
                 matProbabilitySim.SetFloat("_MapMaxI", probIntegral[pointsWide - 1]); // "Map Summed probability", float ) = 1
                 texData[0] = new Color(0, -probIntegral[pointsWide - 1], -1, 1f);
 
@@ -578,7 +591,7 @@ namespace WaveParticleSim
                 tex.Apply();
                 matParticleFlow.SetTexture(texName, tex);
 
-                matParticleFlow.SetFloat("_MapMaxP", maxMomentum); // "Map max momentum", float ) = 1
+                matParticleFlow.SetFloat("_MapMaxP", maxParticleP); // "Map max momentum", float ) = 1
             }
             //Debug.Log(" Created Texture: [" + texName + "]");
             crtUpdateRequired = true;
@@ -698,7 +711,9 @@ namespace WaveParticleSim
             ProbVisPercent = probVisPercent;
             reviewPulse();
             GratingOffset = gratingOffset;
-            ParticleK = particleK;
+            MaxParticleP = maxParticleP;
+            MinParticleP = minParticleP;
+            ParticleP = particleP;
         }
     }
 }
