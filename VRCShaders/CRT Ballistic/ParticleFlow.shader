@@ -1,9 +1,10 @@
-Shader "SimulCat/Ballistic/Particle Scattering"
+Shader "SimulCat/Ballistic/Particle Scattering 2D"
 {
     Properties
     {
         _MainTex ("Particle Texture", 2D) = "white" {}
         _Color("Particle Colour", color) = (1, 1, 1, 1)
+        _ColourMap("Colour lookUp", 2D) = "black" {}
         _Visibility("Visibility",Range(0.0,1.0)) = 1.0
         _MomentumMap("Momentum Map", 2D ) = "black" {}
         _MapMaxP("Map max momentum", float ) = 1
@@ -15,6 +16,8 @@ Shader "SimulCat/Ballistic/Particle Scattering"
         _GratingOffset("Grating X Offset", float) = 0
 
         _ParticleP("Particle Momentum", float) = 1
+        _MinParticleP("Min Momentum", float) = 1
+        _MaxParticleP("Max Momentum", float) = 1
         _MaxVelocity("MaxVelocity", float) = 5
         _SpeedRange("Speed Range fraction",Range(0.0,0.5)) = 0
         _PulseWidth("Pulse Width",float) = 0
@@ -34,7 +37,11 @@ Shader "SimulCat/Ballistic/Particle Scattering"
 
     SubShader
     {
-        Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "PreviewType"="Plane" }
+        Tags 
+        { 
+            "Queue"="Transparent" "IgnoreProjector"="True"  
+            "RenderType"="Transparent" "PreviewType"="Plane" 
+        }
         Blend One One
         LOD 100
         Cull Off
@@ -51,18 +58,12 @@ Shader "SimulCat/Ballistic/Particle Scattering"
 		    //#include "../include/spectrum_zucconi.cginc"
 		    #include "../include/pcg_hash.cginc"
 
-            #define ObjectScale length(unity_ObjectToWorld._m00_m10_m20)
-
-            #define ObjectScaleVec float3( \
-                length(unity_ObjectToWorld._m00_m10_m20),\
-                length(unity_ObjectToWorld._m01_m11_m21),\
-                length(unity_ObjectToWorld._m02_m12_m22))
-
             struct appdata
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
 				uint id : SV_VertexID;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
@@ -70,6 +71,8 @@ Shader "SimulCat/Ballistic/Particle Scattering"
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
                 float4 color : COLOR;
+    			UNITY_VERTEX_INPUT_INSTANCE_ID
+                UNITY_VERTEX_OUTPUT_STEREO
             };
             
             //#define M(U) tex2D(_MomentumMap, float2(U))
@@ -83,12 +86,17 @@ Shader "SimulCat/Ballistic/Particle Scattering"
             sampler2D _MomentumMap;
             float4 _MomentumMap_ST;
           
+            sampler2D _ColourMap;
+            float4 _ColourMap_ST;
+
             float _SlitCount;
             float _SlitPitch;
             float _SlitWidth;
             float _BeamWidth;
             float _GratingOffset;
             float _ParticleP;
+            float _MinParticleP;
+            float _MaxParticleP;
 
             float _MapMaxP;
             float _MaxVelocity;
@@ -128,6 +136,9 @@ Shader "SimulCat/Ballistic/Particle Scattering"
             v2f vert (appdata v)
             {
                 v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+    			UNITY_TRANSFER_INSTANCE_ID(v, o);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 
                 int slitCount = max(round(_SlitCount),1);
                 float slitPitchScaled = _SlitPitch/_Scale;
@@ -206,7 +217,9 @@ Shader "SimulCat/Ballistic/Particle Scattering"
 
                 float2 startPos = float2(preGratingDist-(localGridCentre.x),startPosY);
                 float momentumHash = RandomRange(2, idHash);
-                float3 sample = sampleMomentum(_ParticleP*voffset,momentumHash-1.0);
+                float particleP = _ParticleP*voffset;
+                float momentumFrac = (particleP - _MinParticleP)/(_MaxParticleP-_MinParticleP);
+                float3 sample = sampleMomentum(particleP,momentumHash-1.0);
                 float2 particlePosXY = startPos + sample.xy*postGratingDist;
                 validPosY = validPosY || (trackDistance <= gratingDistance);
                 int  posIsInside = (int)(validPosY)*floor(sample.z)*int((abs(particlePosXY.x) < localGridCentre.x) && (abs(particlePosXY.y) <= localGridCentre.y));
@@ -232,14 +245,16 @@ Shader "SimulCat/Ballistic/Particle Scattering"
                 
                 //Non-billboard standard code
                 //o.vertex = UnityObjectToClipPos (v.vertex);
-                
-                o.color = float4(_Color.rgb,-.5 + posIsInside * 1.5);
+                float4 colSample = tex2Dlod(_ColourMap,float4(momentumFrac,0.5,0,0));
+
+                o.color = float4(colSample.rgb,-.5 + posIsInside * 1.5);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
+		        UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
                 float4 col = tex2D(_MainTex, i.uv);
                 col.rgb *= i.color.rgb;
                 col.a *= i.color.a;
