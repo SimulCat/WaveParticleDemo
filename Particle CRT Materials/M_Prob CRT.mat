@@ -91,7 +91,7 @@ Material:
     - _OcclusionStrength: 1
     - _OutputRaw: 1
     - _Parallax: 0.02
-    - _ParticleP: 22.622593
+    - _ParticleP: 13.378174
     - _Phase: 0
     - _SamplesPerSlit: 7.2
     - _Scale: 2
@@ -108,7 +108,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.91794837, b: 0, a: 1}
+    - _Color: {r: 0.54844284, g: 0, b: 0, a: 1}
     - _ColorFlow: {r: 0.38431373, g: 1, b: 0.54509807, a: 1}
     - _ColorNeg: {r: 0, g: 0.12161077, b: 0.3301887, a: 1}
     - _ColorVel: {r: 1, g: 0.44313726, b: 0, a: 1}

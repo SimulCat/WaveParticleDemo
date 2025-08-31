@@ -23,10 +23,11 @@ namespace WaveParticleSim
         public static float nmToKeV = 1.2398394f;         // nanometres wavelength to Kev
         public static float nmFarRed = 750;
         public static float nmFarViolet = 380;
-        public static float tHz750nm = 400;
-        public static float tHz700nm = 430;
-        public static float tHz400nm = 750;
-        public static float tHz380nm = 790;
+        public static float tHz750nm = 400f;
+        public static float tHz725nm = 413.5f;
+        public static float tHz700nm = 430f;
+        public static float tHz400nm = 750f;
+        public static float tHz380nm = 790f;
         public static float evFarRed = nmRatioToEv / nmFarRed;
         public static float evFarViolet = nmRatioToEv / nmFarViolet;
         //public static float evSpectrum = evFarViolet-evFarRed;
@@ -174,20 +175,20 @@ namespace WaveParticleSim
 
         public static Color lerpColour(float frac)
         {
-            return spectrumColour(Mathf.Lerp(700, 400, frac));
+            return spectrumColour(Mathf.Lerp(725, 380, frac));
         }
 
         public static Color speedColour(float s)
         {
             float frac = (s / 2) + 0.5f;
-            float tHz = Mathf.Lerp(tHz700nm, tHz400nm, frac);
+            float tHz = Mathf.Lerp(tHz725nm, tHz380nm, frac);
             float nm = 299792f / tHz;
             return spectrumColour(nm);
         }
 
         public static Color momentumColour(float e)
         {
-            float tHz = Mathf.Lerp(tHz700nm, tHz400nm, e);
+            float tHz = Mathf.Lerp(tHz725nm, tHz380nm, e);
             float nm = 299792f / tHz;
             return spectrumColour(nm);
         }
